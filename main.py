@@ -124,8 +124,8 @@ def main():
         for path in ['SubgraphFreqInstance', 'Subgraph', 'ChemNP']:
             for FP in fp[path]:
                 result[path if FP == 'subgraph' else FP] = run(f'/home/snu_seoyoung/snu_seoyoung/PU/{path}/result_{seed}', FP, seed)
-            with open(f'/home/snu_seoyoung/snu_seoyoung/PU/result_data_{seed}.pickle', 'wb') as f:
-                pkl.dump(result, f)
+        with open(f'/home/snu_seoyoung/snu_seoyoung/PU/result_data_{seed}.pickle', 'wb') as f:
+            pkl.dump(result, f)
 
 if __name__ == '__main__':
     main()
