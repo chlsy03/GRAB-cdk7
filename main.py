@@ -90,7 +90,7 @@ def run(path : str, FP: str, seed: str):
     pred = (output[:,1]>0.5).int() # result in 1/0
 
     # True Positives (TP)
-    real_p = seed_id
+    real_p = torch.tensor(seed_id)
     FN_indices = torch.nonzero(pred[real_p] == 0, as_tuple=False).squeeze()
     if FN_indices.numel() > 0:
         FN_idx = real_p[FN_indices].tolist()
