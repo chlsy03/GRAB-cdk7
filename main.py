@@ -72,10 +72,8 @@ def run(path : str, FP: str, seed: str):
 
     adj = nx.adjacency_matrix(nx.from_dict_of_lists(graph))
 
-    
     index = np.ones(features.shape[0], dtype=bool)
-    nodes = features[index]
-    nodes = torch.tensor(nodes)
+    nodes = features[index].clone().detach()
     edges = torch.tensor(edges)
 
     graph = Graph(nodes, edges).to(DEVICE)
@@ -90,7 +88,7 @@ def run(path : str, FP: str, seed: str):
     pred = (output[:,1]>0.5).int() # result in 1/0
 
     # True Positives (TP)
-    real_p = torch.tensor(seed_id)
+    real_p = np.concatenate((spy, positive))
     FN_indices = torch.nonzero(pred[real_p] == 0, as_tuple=False).squeeze()
     if FN_indices.numel() > 0:
         FN_idx = real_p[FN_indices].tolist()
