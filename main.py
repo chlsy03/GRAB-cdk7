@@ -82,12 +82,12 @@ def run(path : str, FP: str, seed: str):
 
     #perform GRAB
     output = GRAB(graph, adj, features, unlabeled, positive, FP, seed) # result probability
-    result['probability'] = {idx_to_id[i]: tuple(row.tolist()) for i, row in enumerate(output)}
-
-    pred = (output[:,1]>0.5).int() # result in 1/0
 
     # Compute evaluation metrics
     result = {}
+    result['probability'] = {idx_to_id[i]: tuple(row.tolist()) for i, row in enumerate(output)}
+
+    pred = (output[:,1]>0.5).int() # result in 1/0
 
     # True Positives (TP)
     real_p = seed_id
@@ -115,13 +115,13 @@ def run(path : str, FP: str, seed: str):
 
 
 def main():
-    fp = {'ChemNP':['avalon','cdk-substructure','estate','extended','fp2','fp4','graph','hybridization','klekota-roth','maccs','pubchem','rdkit','standard'],
+    fp = {'ChemNP':['standard','avalon','cdk-substructure','estate','extended','fp2','fp4','graph','hybridization','klekota-roth','maccs','pubchem','rdkit'],
           'Subgraph':['subgraph'],
           'SubgraphFreqInstance':['subgraph']}
     
     for seed in ['0','7','28','256','342']:
         result = {}
-        for path in ['SubgraphFreqInstance', 'Subgraph', 'ChemNP']:
+        for path in [ 'ChemNP','SubgraphFreqInstance', 'Subgraph']:
             for FP in fp[path]:
                 result[path if FP == 'subgraph' else FP] = run(f'/home/snu_seoyoung/snu_seoyoung/PU/{path}/result_{seed}', FP, seed)
         with open(f'/home/snu_seoyoung/snu_seoyoung/PU/result_data_{seed}.pickle', 'wb') as f:
