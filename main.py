@@ -92,8 +92,8 @@ def run(path : str, FP: str, seed: str):
     FN_indices = torch.nonzero(pred[real_p] == 0, as_tuple=False).squeeze()
 
     if FN_indices.numel() > 0:
-        if FN_indices.ndim == 0:  # 스칼라인 경우 처리
-            FN_idx = [real_p[FN_indices.item()]]  # 스칼라를 리스트로 변환
+        if FN_indices.ndim == 0:  
+            FN_idx = [real_p[FN_indices.item()]]  
         else:
             FN_idx = real_p[FN_indices].tolist()
         result['FNid'] = [idx_to_id[idx] for idx in FN_idx]
@@ -110,10 +110,10 @@ def run(path : str, FP: str, seed: str):
     FP_indices = torch.nonzero(pred[compound] == 1, as_tuple=False).squeeze()
 
     if FP_indices.numel() > 0:
-        if FP_indices.ndim == 0:  # FP_indices가 스칼라인 경우 처리
-            FP_idx = [compound[FP_indices.item()]]  # 스칼라를 리스트로 변환
-        else:  # FP_indices가 리스트인 경우
-            FP_idx = compound[FP_indices].tolist()  # numpy.ndarray -> list로 변환
+        if FP_indices.ndim == 0:  #if FP_indices is scalar
+            FP_idx = [compound[FP_indices.item()]] 
+        else:  
+            FP_idx = compound[FP_indices].tolist() 
         result['FPid'] = [idx_to_id[idx] for idx in FP_idx]
     else:
         result['FPid'] = []
